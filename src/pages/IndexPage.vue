@@ -3,7 +3,7 @@
   import { routes } from '@/router';
   import AppPage from '@/components/AppPage.vue';
   import AppLink from '@/components/AppLink.vue';
-  import  CRM from '@/components/CRM.vue';
+  import TaskForm from '@/components/CRM.vue';
 
 
   const nonIndexRoutes = computed(() => routes.filter((r) => !!r.meta?.title));
@@ -14,10 +14,10 @@
 
 <template>
   <AppPage title="ДОбро" :back="false">
-    <h2 class="text-xl font-bold mb-4">Submit Task</h2>
-    <form @submit.prevent="submitForm" class="space-y-4">
-      <input v-model="formData.Name" type="text" placeholder="Name" class="border p-2 w-full rounded" required />
-      <input v-model="formData.Descr" type="text" placeholder="Description" class="border p-2 w-full rounded" required />
+    <h2 class="text-xl font-bold mb-4">Создать задачу</h2>
+    <form name="submitForm" id="submitForm" class="space-y-4">
+      <input v-model="TaskForm.Name" type="text" placeholder="Name" class="border p-2 w-full rounded" required />
+      <input v-model="TaskForm.Descr" type="text" placeholder="Description" class="border p-2 w-full rounded" required />
       <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
     </form>
     <p>
