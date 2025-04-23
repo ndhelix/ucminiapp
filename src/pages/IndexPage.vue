@@ -19,16 +19,20 @@
     },
     methods: {
       async submitForm() {
-        alert('Hello task.');
+        //alert('Hello task.');
         try {
-          const response = await axios.post('https://unit-control.com/Missions/PostTask', formData, {
-            headers: { 'Content-Type': 'application/json' }
+          const headers = {
+            'Content-Type': 'application/json',
+          }
+
+          const response = await axios.post('https://unit-control.ru/Missions/PostTask', this.formData, {
+            headers: headers
           });
           console.log('Response:', response.data);
-          alert('Task submitted successfully!');
+          alert('Задача создана.');
         } catch (error) {
           console.error('Error submitting task:', error);
-          alert('Failed to submit task.' + error);
+          alert('Failed to submit task. ' + error);
         }
       }
     }
@@ -46,18 +50,17 @@
       <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Создать</button>
     </form>
     <p>
-      This page is a home page in this boilerplate. gfhjfjghYou can use the links below to visit other
-      pages with their own functionality.
+      
     </p>
     <ul class="index-page__links">
-      <li v-for="route in nonIndexRoutes" :key="route.name" class="index-page__link-item">
+      <!--<li v-for="route in nonIndexRoutes" :key="route.name" class="index-page__link-item">
         <AppLink class="index-page__link" :to="{ name: route.name }">
           <i v-if="route.meta?.icon" class="index-page__link-icon">
             <component :is="route.meta.icon" />
           </i>
           {{ route.meta!.title }}
         </AppLink>
-      </li>
+      </li>-->
     </ul>
   </AppPage>
 </template>
