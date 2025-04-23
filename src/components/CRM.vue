@@ -25,7 +25,7 @@
           alert('Task submitted successfully!');
         } catch (error) {
           console.error('Error submitting task:', error);
-          alert('Failed to submit task.');
+          alert('Failed to submit task.' + error);
         }
       };
 

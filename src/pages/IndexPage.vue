@@ -1,24 +1,49 @@
-<script setup lang="ts">
+<script  lang="ts">
   import { computed } from 'vue';
   import { routes } from '@/router';
   import AppPage from '@/components/AppPage.vue';
   import AppLink from '@/components/AppLink.vue';
   import TaskForm from '@/components/CRM.vue';
-
+  import axios from 'axios';
 
   const nonIndexRoutes = computed(() => routes.filter((r) => !!r.meta?.title));
 
+  export default {
+    data() {
+      return {
+        formData: {
+          Name: '',
+          Descr: ''
+        }
+      };
+    },
+    methods: {
+      async submitForm() {
+        alert('Hello task.');
+        try {
+          const response = await axios.post('https://unit-control.com/Missions/PostTask', formData, {
+            headers: { 'Content-Type': 'application/json' }
+          });
+          console.log('Response:', response.data);
+          alert('Task submitted successfully!');
+        } catch (error) {
+          console.error('Error submitting task:', error);
+          alert('Failed to submit task.' + error);
+        }
+      }
+    }
+  };
 
 </script>
 
 
 <template>
-  <AppPage title="ДОбро" :back="false">
-    <h2 class="text-xl font-bold mb-4">Создать задачу</h2>
-    <form name="submitForm" id="submitForm" class="space-y-4">
-      <input v-model="TaskForm.Name" type="text" placeholder="Name" class="border p-2 w-full rounded" required />
-      <input v-model="TaskForm.Descr" type="text" placeholder="Description" class="border p-2 w-full rounded" required />
-      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+  <AppPage title="UNIT-CONTROL" :back="false">
+    <h2 class="text-xl font-bold mb-4">Новая задача</h2>
+    <form @submit.prevent="submitForm"  class="space-y-4">
+      <input v-model="formData.Name" type="text" placeholder="Название" class="border p-2 w-full rounded" required />
+      <input v-model="formData.Descr" type="text" placeholder="Описание" class="border p-2 w-full rounded" required />
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Создать</button>
     </form>
     <p>
       This page is a home page in this boilerplate. gfhjfjghYou can use the links below to visit other
