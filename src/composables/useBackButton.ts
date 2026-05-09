@@ -8,7 +8,9 @@ export function useBackButton() {
     const router = useRouter()
 
     watch(() => route.name, () => {
-        if (route.name === 'index') {
+        if (!backButton.isSupported())
+            return
+        if (route.name === 'calendar') {
             backButton.hide()
             offClick()
         } else if (!backButton.isVisible()) {

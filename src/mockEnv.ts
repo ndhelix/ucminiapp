@@ -23,6 +23,8 @@ if (import.meta.env.DEV) {
         try {
             lp = retrieveLaunchParams();
         } catch {
+            // SDK template initData: fixed hash is tied to these fields + auth_date. For CRM validation,
+            // set Web.config TelegramInitDataMaxAgeHours to 0 on your dev CRM only (see CRM Utils), or open the app in real Telegram.
             const initDataRaw = new URLSearchParams([
                 ['user', JSON.stringify({
                     id: 99281932,

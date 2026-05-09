@@ -27,12 +27,13 @@ export function init(debug: boolean): void {
     }
 
     // Check if all required components are supported.
-    if (!backButton.isSupported() || !miniApp.isSupported()) {
+    if (!miniApp.isSupported()) {
         throw new Error('ERR_NOT_SUPPORTED');
     }
 
     // Mount all components used in the project.
-    backButton.mount();
+    if ( backButton.isSupported() )
+        backButton.mount();
     miniApp.mount();
     themeParams.mount();
     initData.restore();
