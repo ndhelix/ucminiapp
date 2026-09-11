@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>CRM</title></head>
+<body><p>Открываем CRM…</p><script>
+// GitHub Pages does not rewrite nested SPA routes to index.html.
+// Keep Telegram's launch hash intact while returning through the application entry point.
+const base = '/ucminiapp/';
+if (location.pathname.startsWith(base)) {
+  const route = location.pathname.slice(base.length) + location.search;
+  location.replace(base + '?__route=' + encodeURIComponent(route) + location.hash);
+}
+</script></body></html>

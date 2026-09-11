@@ -69,6 +69,7 @@ export interface MiniAppTotals {
 
 
 export interface MiniAppCalendarResponse {
+  Truncated?: boolean;
 
   Success: boolean;
 
@@ -161,5 +162,4 @@ export interface TariffReportResponse {
   Items?: TariffReportRow[];
 
 }
-
 

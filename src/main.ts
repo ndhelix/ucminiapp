@@ -10,6 +10,11 @@ import { init } from './init'
 
 import './mockEnv'
 
+const redirectedRoute = new URLSearchParams(location.search).get('__route')
+if (redirectedRoute && /^(calendar|clients|events|reports|missions|notifications|payments|analytics|more|catalog|bulk|exams|audit|bot-stream)(\/|\?|$)/.test(redirectedRoute)) {
+    history.replaceState(null, '', import.meta.env.BASE_URL + redirectedRoute + location.hash)
+}
+
 init( retrieveLaunchParams().startParam === 'debug' || import.meta.env.DEV )
 
 const app = createApp( App )

@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { workspace, localDate } from '@/api/workspace';
 import { getCrmClient } from '@/api/crmClient';
 import type { MiniAppCalendarResponse, MiniAppCalendarSlot } from '@/api/crmTypes';
 
 const loading = ref( false );
+const route = useRoute(), router = useRouter();
 const err = ref<string | null>( null );
 const data = ref<MiniAppCalendarResponse | null>( null );
 
@@ -49,26 +52,27 @@ async function load( body: Record<string, unknown> = {} ) {
 }
 
 function prevMonth() {
-  load( {
-    datepickfrom: data.value?.datepickfrom,
-    datepickto: data.value?.datepickto,
-    gotoprev: true,
-  } );
+  changeMonth(-1);
 }
 
 function nextMonth() {
-  load( {
-    datepickfrom: data.value?.datepickfrom,
-    datepickto: data.value?.datepickto,
-    gotonext: true,
-  } );
+  changeMonth(1);
 }
 
-onMounted( () => load( {} ) );
+function changeMonth(delta: number) {
+  const date = data.value?.datepickfrom ? new Date(data.value.datepickfrom) : new Date();
+  date.setDate(1); date.setMonth(date.getMonth() + delta);
+  router.replace({ path: '/calendar', query: { month: localDate(date).slice(0, 7) } });
+}
+watch(() => route.query.month, () => {
+  const month = route.query.month;
+  load(typeof month === 'string' && /^\d{4}-\d{2}$/.test(month) ? { datepickfrom: `${month}-01T00:00:00` } : {});
+}, { immediate: true });
 </script>
 
 <template>
   <div class="cal">
+    <div class="section-heading"><RouterLink v-if="workspace.me?.Permissions.EditEvents" class="primary-link" to="/events/new">Создать событие</RouterLink></div>
     <div class="cal__toolbar">
       <button type="button" class="cal__btn" :disabled="loading" @click="prevMonth">
         ←
@@ -97,6 +101,7 @@ onMounted( () => load( {} ) );
     <p v-else-if="err" class="cal__err">
       {{ err }}
     </p>
+    <p v-if="data?.Truncated" class="cal__hint">Показаны первые 500 записей каждого вида. Остальные доступны в разделе «События» с фильтром по датам.</p>
 
     <section v-if="data?.Totals" class="totals">
       <div class="totals__line">
@@ -134,7 +139,8 @@ onMounted( () => load( {} ) );
             {{ slot.Kind === 'campaign' ? 'Кампания' : 'Событие' }}
           </div>
           <div class="slot__title">
-            {{ slot.Title }}
+            <RouterLink v-if="slot.Kind === 'event'" :to="`/events/${slot.Id}`">{{ slot.Title }}</RouterLink>
+            <template v-else>{{ slot.Title }}</template>
           </div>
           <pre class="slot__descr">{{ slot.Description }}</pre>
         </div>

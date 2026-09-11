@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { getCrmClient, apiBase } from '@/api/crmClient';
 import type {
   TariffReportResponse,
@@ -14,6 +15,7 @@ const err = ref<string | null>( null );
 const raw = ref<Record<string, unknown> | null>( null );
 
 const crmOrigin = apiBase();
+const router = useRouter();
 
 type RangeKey = 'month' | '30d' | '90d';
 const range = ref<RangeKey>( 'month' );
@@ -160,11 +162,7 @@ function formatDtRu( iso: string | undefined ): string {
 function openClient( row: TariffReportRow ) {
   if ( !row.ClientId )
     return;
-  const url = `${crmOrigin}/Clients/Edit/${row.ClientId}`;
-  if ( openLink.isAvailable() )
-    openLink( url );
-  else
-    window.open( url, '_blank', 'noopener,noreferrer' );
+  router.push(`/clients/${row.ClientId}`);
 }
 
 function openFullReportInBrowser() {
@@ -281,7 +279,7 @@ onMounted( load );
         </table>
       </div>
       <p class="rep__hint rep__hint--small">
-        Нажмите строку, чтобы открыть карточку клиента в CRM.
+        Нажмите строку, чтобы открыть карточку клиента.
       </p>
     </template>
     <p v-else class="rep__hint">

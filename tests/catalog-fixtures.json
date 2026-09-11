@@ -1,0 +1,1314 @@
+[
+  {
+    "Definition": {
+      "Kind": "services",
+      "Title": "Тарифы",
+      "TitleField": "Name",
+      "DateField": null,
+      "ParentField": null,
+      "ChildKind": null,
+      "Global": false,
+      "CanEdit": true,
+      "CanCreate": true,
+      "CanDelete": true,
+      "Fields": [
+        {
+          "Name": "Name",
+          "Label": "Название",
+          "Type": "text",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Code",
+          "Label": "Код",
+          "Type": "text",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 50,
+          "Options": null
+        },
+        {
+          "Name": "PriceRub",
+          "Label": "Цена, ₽",
+          "Type": "number",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "DurationMon",
+          "Label": "Длительность, месяцев",
+          "Type": "number",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "DurationDays",
+          "Label": "Длительность, дней",
+          "Type": "number",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "ShowInCabinet",
+          "Label": "Показывать в ЛК",
+          "Type": "bool",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "OrderNum",
+          "Label": "Порядок",
+          "Type": "number",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Product_ID",
+          "Label": "Продукт",
+          "Type": "select",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": [
+            {
+              "Id": 4,
+              "Name": "Запросы"
+            }
+          ]
+        },
+        {
+          "Name": "Comments",
+          "Label": "Описание",
+          "Type": "textarea",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 10000,
+          "Options": null
+        }
+      ]
+    },
+    "Values": {
+      "Name": "Тест",
+      "Code": "Тест",
+      "PriceRub": 0,
+      "DurationMon": 0,
+      "DurationDays": 0,
+      "ShowInCabinet": false,
+      "OrderNum": 0,
+      "Product_ID": 4,
+      "Comments": "Тест"
+    }
+  },
+  {
+    "Definition": {
+      "Kind": "campaigns",
+      "Title": "Рекламные кампании",
+      "TitleField": "CampaignText",
+      "DateField": "Planned",
+      "ParentField": null,
+      "ChildKind": null,
+      "Global": false,
+      "CanEdit": true,
+      "CanCreate": true,
+      "CanDelete": true,
+      "Fields": [
+        {
+          "Name": "CampaignText",
+          "Label": "Текст креатива",
+          "Type": "textarea",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 10000,
+          "Options": null
+        },
+        {
+          "Name": "Tgchannel_ID",
+          "Label": "Площадка",
+          "Type": "select",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": [
+            {
+              "Id": 1,
+              "Name": "Площадка"
+            }
+          ]
+        },
+        {
+          "Name": "Manager_ID",
+          "Label": "Ответственный",
+          "Type": "select",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": [
+            {
+              "Id": 12,
+              "Name": "Тестовый менеджер"
+            }
+          ]
+        },
+        {
+          "Name": "Planned",
+          "Label": "Публикация",
+          "Type": "datetime-local",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "EventStatus_ID",
+          "Label": "Статус",
+          "Type": "select",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": [
+            {
+              "Id": 1,
+              "Name": "Не выполнено"
+            }
+          ]
+        },
+        {
+          "Name": "AmountRub",
+          "Label": "Сумма закупа, ₽",
+          "Type": "number",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Paid",
+          "Label": "Оплачено",
+          "Type": "bool",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "HasMarking",
+          "Label": "Маркировка",
+          "Type": "bool",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "ChannelToAd",
+          "Label": "Канал, который рекламируем",
+          "Type": "text",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "LinkToAd",
+          "Label": "Ссылка на наш канал",
+          "Type": "text",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 500,
+          "Options": null
+        },
+        {
+          "Name": "BuyConditions",
+          "Label": "Условия закупа",
+          "Type": "textarea",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 3000,
+          "Options": null
+        },
+        {
+          "Name": "Discount",
+          "Label": "Скидка",
+          "Type": "text",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "DiscountRub",
+          "Label": "Скидка, ₽",
+          "Type": "number",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Comments",
+          "Label": "Комментарии",
+          "Type": "textarea",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 10000,
+          "Options": null
+        }
+      ]
+    },
+    "Values": {
+      "CampaignText": "Тест",
+      "Tgchannel_ID": 1,
+      "Manager_ID": 12,
+      "Planned": "2026-09-11T12:00:00",
+      "EventStatus_ID": 1,
+      "AmountRub": 0,
+      "Paid": false,
+      "HasMarking": false,
+      "ChannelToAd": "Тест",
+      "LinkToAd": "Тест",
+      "BuyConditions": "Тест",
+      "Discount": "Тест",
+      "DiscountRub": 0,
+      "Comments": "Тест"
+    }
+  },
+  {
+    "Definition": {
+      "Kind": "tgchannels",
+      "Title": "Рекламные площадки",
+      "TitleField": "Name",
+      "DateField": null,
+      "ParentField": null,
+      "ChildKind": null,
+      "Global": false,
+      "CanEdit": true,
+      "CanCreate": true,
+      "CanDelete": true,
+      "Fields": [
+        {
+          "Name": "Name",
+          "Label": "Название",
+          "Type": "text",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Addr",
+          "Label": "Ссылка на канал",
+          "Type": "text",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 500,
+          "Options": null
+        },
+        {
+          "Name": "AdminAddr",
+          "Label": "Администратор канала",
+          "Type": "text",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Manager_ID",
+          "Label": "Ответственный",
+          "Type": "select",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": [
+            {
+              "Id": 12,
+              "Name": "Тестовый менеджер"
+            }
+          ]
+        },
+        {
+          "Name": "Comments",
+          "Label": "Комментарии",
+          "Type": "textarea",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 10000,
+          "Options": null
+        }
+      ]
+    },
+    "Values": {
+      "Name": "Тест",
+      "Addr": "Тест",
+      "AdminAddr": "Тест",
+      "Manager_ID": 12,
+      "Comments": "Тест"
+    }
+  },
+  {
+    "Definition": {
+      "Kind": "managers",
+      "Title": "Сотрудники",
+      "TitleField": "Name",
+      "DateField": null,
+      "ParentField": null,
+      "ChildKind": null,
+      "Global": false,
+      "CanEdit": true,
+      "CanCreate": true,
+      "CanDelete": false,
+      "Fields": [
+        {
+          "Name": "Name",
+          "Label": "Имя",
+          "Type": "text",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Phone",
+          "Label": "Телефон",
+          "Type": "text",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 50,
+          "Options": null
+        },
+        {
+          "Name": "Email",
+          "Label": "Email",
+          "Type": "email",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 50,
+          "Options": null
+        },
+        {
+          "Name": "Position",
+          "Label": "Описание должности",
+          "Type": "text",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Comments",
+          "Label": "Комментарии",
+          "Type": "textarea",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 5000,
+          "Options": null
+        },
+        {
+          "Name": "Dob",
+          "Label": "Дата рождения",
+          "Type": "date",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "HireDate",
+          "Label": "Дата найма",
+          "Type": "date",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "FireDate",
+          "Label": "Дата увольнения",
+          "Type": "date",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Address",
+          "Label": "Адрес",
+          "Type": "text",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 1000,
+          "Options": null
+        },
+        {
+          "Name": "SalaryPlan",
+          "Label": "Уточнение зарплаты",
+          "Type": "text",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 150,
+          "Options": null
+        },
+        {
+          "Name": "Login",
+          "Label": "Логин",
+          "Type": "text",
+          "Required": false,
+          "ReadOnly": true,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Telegram",
+          "Label": "Telegram",
+          "Type": "text",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 100,
+          "Options": null
+        },
+        {
+          "Name": "TelegramId",
+          "Label": "Telegram ID",
+          "Type": "telegram",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Job_Id",
+          "Label": "Должность",
+          "Type": "select",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": [
+            {
+              "Id": 0,
+              "Name": null
+            }
+          ]
+        },
+        {
+          "Name": "MiniappUserLevel",
+          "Label": "Доступ в Mini App",
+          "Type": "select",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": [
+            {
+              "Id": 0,
+              "Name": "Нет"
+            },
+            {
+              "Id": 1,
+              "Name": "Включён"
+            },
+            {
+              "Id": 2,
+              "Name": "Уровень 2 (не роль admin)"
+            }
+          ]
+        },
+        {
+          "Name": "Active",
+          "Label": "Активен",
+          "Type": "bool",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Blocked",
+          "Label": "Заблокирован",
+          "Type": "bool",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Fired",
+          "Label": "Уволен",
+          "Type": "bool",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        }
+      ]
+    },
+    "Values": {
+      "Name": "Тест",
+      "Phone": "Тест",
+      "Email": "test@example.test",
+      "Position": "Тест",
+      "Comments": "Тест",
+      "Dob": "2026-09-11",
+      "HireDate": "2026-09-11",
+      "FireDate": "2026-09-11",
+      "Address": "Тест",
+      "SalaryPlan": "Тест",
+      "Login": "testemployee",
+      "Telegram": "Тест",
+      "TelegramId": "123456789",
+      "Job_Id": 0,
+      "MiniappUserLevel": 0,
+      "Active": false,
+      "Blocked": false,
+      "Fired": false
+    }
+  },
+  {
+    "Definition": {
+      "Kind": "expenses",
+      "Title": "Расходы",
+      "TitleField": "Name",
+      "DateField": "Created",
+      "ParentField": null,
+      "ChildKind": null,
+      "Global": false,
+      "CanEdit": true,
+      "CanCreate": true,
+      "CanDelete": true,
+      "Fields": [
+        {
+          "Name": "Name",
+          "Label": "Название",
+          "Type": "text",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "AmountRub",
+          "Label": "Сумма, ₽",
+          "Type": "number",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "ExpenseType",
+          "Label": "Тип расхода",
+          "Type": "select",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": [
+            {
+              "Id": 1,
+              "Name": "Разработка ПО"
+            },
+            {
+              "Id": 2,
+              "Name": "Реклама"
+            },
+            {
+              "Id": 3,
+              "Name": "ЗП"
+            },
+            {
+              "Id": 4,
+              "Name": "Другое"
+            }
+          ]
+        },
+        {
+          "Name": "Created",
+          "Label": "Дата",
+          "Type": "datetime-local",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Comments",
+          "Label": "Комментарии",
+          "Type": "textarea",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 5000,
+          "Options": null
+        }
+      ]
+    },
+    "Values": {
+      "Name": "Тест",
+      "AmountRub": 0,
+      "ExpenseType": 1,
+      "Created": "2026-09-11T12:00:00",
+      "Comments": "Тест"
+    }
+  },
+  {
+    "Definition": {
+      "Kind": "adsources",
+      "Title": "Источники рекламы",
+      "TitleField": "Name",
+      "DateField": null,
+      "ParentField": null,
+      "ChildKind": null,
+      "Global": false,
+      "CanEdit": true,
+      "CanCreate": true,
+      "CanDelete": true,
+      "Fields": [
+        {
+          "Name": "Name",
+          "Label": "Название",
+          "Type": "text",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Comments",
+          "Label": "Комментарии",
+          "Type": "textarea",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 5000,
+          "Options": null
+        }
+      ]
+    },
+    "Values": {
+      "Name": "Тест",
+      "Comments": "Тест"
+    }
+  },
+  {
+    "Definition": {
+      "Kind": "products",
+      "Title": "Продукты",
+      "TitleField": "Name",
+      "DateField": null,
+      "ParentField": null,
+      "ChildKind": null,
+      "Global": false,
+      "CanEdit": true,
+      "CanCreate": true,
+      "CanDelete": true,
+      "Fields": [
+        {
+          "Name": "Name",
+          "Label": "Название",
+          "Type": "text",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "OrderNum",
+          "Label": "Порядок",
+          "Type": "number",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "HexColor",
+          "Label": "Цвет #RRGGBB",
+          "Type": "text",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 7,
+          "Options": null
+        },
+        {
+          "Name": "Comments",
+          "Label": "Комментарии",
+          "Type": "textarea",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 5000,
+          "Options": null
+        }
+      ]
+    },
+    "Values": {
+      "Name": "Тест",
+      "OrderNum": 0,
+      "HexColor": "#abcdef",
+      "Comments": "Тест"
+    }
+  },
+  {
+    "Definition": {
+      "Kind": "channels",
+      "Title": "Каналы CRM",
+      "TitleField": "Name",
+      "DateField": null,
+      "ParentField": null,
+      "ChildKind": null,
+      "Global": false,
+      "CanEdit": true,
+      "CanCreate": true,
+      "CanDelete": true,
+      "Fields": [
+        {
+          "Name": "Name",
+          "Label": "Название",
+          "Type": "text",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "TelegramId",
+          "Label": "Telegram ID",
+          "Type": "telegram",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "OrderNum",
+          "Label": "Порядок",
+          "Type": "number",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Comments",
+          "Label": "Комментарии",
+          "Type": "textarea",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 5000,
+          "Options": null
+        }
+      ]
+    },
+    "Values": {
+      "Name": "Тест",
+      "TelegramId": "-100123456789",
+      "OrderNum": 0,
+      "Comments": "Тест"
+    }
+  },
+  {
+    "Definition": {
+      "Kind": "companies",
+      "Title": "Настройки компании",
+      "TitleField": "Name",
+      "DateField": null,
+      "ParentField": null,
+      "ChildKind": null,
+      "Global": false,
+      "CanEdit": true,
+      "CanCreate": false,
+      "CanDelete": false,
+      "Fields": [
+        {
+          "Name": "Name",
+          "Label": "Название",
+          "Type": "text",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Code",
+          "Label": "Код",
+          "Type": "text",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 10,
+          "Options": null
+        },
+        {
+          "Name": "Comments",
+          "Label": "Комментарии",
+          "Type": "textarea",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 5000,
+          "Options": null
+        },
+        {
+          "Name": "ShowServices",
+          "Label": "Тарифы",
+          "Type": "bool",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "ShowChannels",
+          "Label": "Каналы",
+          "Type": "bool",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "ShowCampaigns",
+          "Label": "Реклама",
+          "Type": "bool",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "ShowReports",
+          "Label": "Отчёты",
+          "Type": "bool",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "ShowMissions",
+          "Label": "Задачи",
+          "Type": "bool",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        }
+      ]
+    },
+    "Values": {
+      "Name": "Тест",
+      "Code": "Тест",
+      "Comments": "Тест",
+      "ShowServices": false,
+      "ShowChannels": false,
+      "ShowCampaigns": false,
+      "ShowReports": false,
+      "ShowMissions": false
+    }
+  },
+  {
+    "Definition": {
+      "Kind": "templates",
+      "Title": "Шаблоны SMS",
+      "TitleField": "Name",
+      "DateField": null,
+      "ParentField": null,
+      "ChildKind": null,
+      "Global": true,
+      "CanEdit": true,
+      "CanCreate": true,
+      "CanDelete": false,
+      "Fields": [
+        {
+          "Name": "Name",
+          "Label": "Название",
+          "Type": "text",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 40,
+          "Options": null
+        },
+        {
+          "Name": "Text",
+          "Label": "Текст",
+          "Type": "textarea",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 800,
+          "Options": null
+        }
+      ]
+    },
+    "Values": {
+      "Name": "Тест",
+      "Text": "Тест"
+    }
+  },
+  {
+    "Definition": {
+      "Kind": "jobs",
+      "Title": "Должности",
+      "TitleField": "Name",
+      "DateField": null,
+      "ParentField": null,
+      "ChildKind": null,
+      "Global": true,
+      "CanEdit": true,
+      "CanCreate": true,
+      "CanDelete": false,
+      "Fields": [
+        {
+          "Name": "Name",
+          "Label": "Название",
+          "Type": "text",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Code",
+          "Label": "Код роли",
+          "Type": "select",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": [
+            {
+              "Id": 1,
+              "Name": "Pretender"
+            },
+            {
+              "Id": 2,
+              "Name": "Trainee"
+            },
+            {
+              "Id": 3,
+              "Name": "Manager"
+            },
+            {
+              "Id": 4,
+              "Name": "Secretary"
+            },
+            {
+              "Id": 5,
+              "Name": "Operator"
+            },
+            {
+              "Id": 6,
+              "Name": "Director"
+            },
+            {
+              "Id": 7,
+              "Name": "СhiefAnalyst"
+            },
+            {
+              "Id": 8,
+              "Name": "Observer"
+            },
+            {
+              "Id": 9,
+              "Name": "Promoter"
+            },
+            {
+              "Id": 10,
+              "Name": "ManagerOfMeetings"
+            },
+            {
+              "Id": 11,
+              "Name": "Other"
+            },
+            {
+              "Id": 13,
+              "Name": "AdCampaignManager"
+            }
+          ]
+        },
+        {
+          "Name": "Comments",
+          "Label": "Комментарии",
+          "Type": "textarea",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 5000,
+          "Options": null
+        },
+        {
+          "Name": "SalaryPlan",
+          "Label": "План зарплаты",
+          "Type": "text",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 1000,
+          "Options": null
+        }
+      ]
+    },
+    "Values": {
+      "Name": "Тест",
+      "Code": 1,
+      "Comments": "Тест",
+      "SalaryPlan": "Тест"
+    }
+  },
+  {
+    "Definition": {
+      "Kind": "tickers",
+      "Title": "Тикеры бирж",
+      "TitleField": "Name",
+      "DateField": null,
+      "ParentField": null,
+      "ChildKind": null,
+      "Global": true,
+      "CanEdit": true,
+      "CanCreate": true,
+      "CanDelete": true,
+      "Fields": [
+        {
+          "Name": "Name",
+          "Label": "Название",
+          "Type": "text",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 100,
+          "Options": null
+        },
+        {
+          "Name": "Comments",
+          "Label": "Комментарии",
+          "Type": "textarea",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        }
+      ]
+    },
+    "Values": {
+      "Name": "Тест",
+      "Comments": "Тест"
+    }
+  },
+  {
+    "Definition": {
+      "Kind": "payroll",
+      "Title": "Зарплата",
+      "TitleField": "Month",
+      "DateField": "Month",
+      "ParentField": null,
+      "ChildKind": null,
+      "Global": false,
+      "CanEdit": true,
+      "CanCreate": true,
+      "CanDelete": true,
+      "Fields": [
+        {
+          "Name": "Manager_ID",
+          "Label": "Сотрудник",
+          "Type": "select",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": [
+            {
+              "Id": 12,
+              "Name": "Тестовый менеджер"
+            }
+          ]
+        },
+        {
+          "Name": "Month",
+          "Label": "Месяц (первое число)",
+          "Type": "date",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Amount",
+          "Label": "Сумма, ₽",
+          "Type": "decimal",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        }
+      ]
+    },
+    "Values": {
+      "Manager_ID": 12,
+      "Month": "2026-09-11",
+      "Amount": 0
+    }
+  },
+  {
+    "Definition": {
+      "Kind": "surveys",
+      "Title": "Администрирование тестов",
+      "TitleField": "Name",
+      "DateField": null,
+      "ParentField": null,
+      "ChildKind": "questions",
+      "Global": true,
+      "CanEdit": true,
+      "CanCreate": true,
+      "CanDelete": true,
+      "Fields": [
+        {
+          "Name": "Name",
+          "Label": "Название",
+          "Type": "text",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "OrderNum",
+          "Label": "Порядок",
+          "Type": "number",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "IsActive",
+          "Label": "Включён",
+          "Type": "bool",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Comments",
+          "Label": "Комментарии",
+          "Type": "textarea",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 1111,
+          "Options": null
+        }
+      ]
+    },
+    "Values": {
+      "Name": "Тест",
+      "OrderNum": 0,
+      "IsActive": false,
+      "Comments": "Тест"
+    }
+  },
+  {
+    "Definition": {
+      "Kind": "questions",
+      "Title": "Вопросы теста",
+      "TitleField": "Name",
+      "DateField": null,
+      "ParentField": "Survey_ID",
+      "ChildKind": "answers",
+      "Global": true,
+      "CanEdit": true,
+      "CanCreate": true,
+      "CanDelete": true,
+      "Fields": [
+        {
+          "Name": "Name",
+          "Label": "Вопрос",
+          "Type": "textarea",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Survey_ID",
+          "Label": "ID теста",
+          "Type": "number",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "OrderNum",
+          "Label": "Порядок",
+          "Type": "number",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        }
+      ]
+    },
+    "Values": {
+      "Name": "Тест",
+      "Survey_ID": 0,
+      "OrderNum": 0
+    }
+  },
+  {
+    "Definition": {
+      "Kind": "answers",
+      "Title": "Ответы на вопрос",
+      "TitleField": "Name",
+      "DateField": null,
+      "ParentField": "Question_ID",
+      "ChildKind": null,
+      "Global": true,
+      "CanEdit": true,
+      "CanCreate": true,
+      "CanDelete": true,
+      "Fields": [
+        {
+          "Name": "Name",
+          "Label": "Ответ",
+          "Type": "textarea",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Question_ID",
+          "Label": "ID вопроса",
+          "Type": "number",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "OrderNum",
+          "Label": "Порядок",
+          "Type": "number",
+          "Required": true,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        },
+        {
+          "Name": "Correct",
+          "Label": "Правильный ответ",
+          "Type": "bool",
+          "Required": false,
+          "ReadOnly": false,
+          "MaxLength": 250,
+          "Options": null
+        }
+      ]
+    },
+    "Values": {
+      "Name": "Тест",
+      "Question_ID": 0,
+      "OrderNum": 0,
+      "Correct": false
+    }
+  }
+]

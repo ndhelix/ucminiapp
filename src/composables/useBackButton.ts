@@ -1,5 +1,5 @@
 import { backButton } from '@telegram-apps/sdk-vue'
-import { watch } from 'vue'
+import { onUnmounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 export function useBackButton() {
@@ -7,19 +7,23 @@ export function useBackButton() {
     const route = useRoute()
     const router = useRouter()
 
-    watch(() => route.name, () => {
+    watch(() => route.path, () => {
         if (!backButton.isSupported())
             return
-        if (route.name === 'calendar') {
+        if (route.path === '/') {
             backButton.hide()
             offClick()
         } else if (!backButton.isVisible()) {
             backButton.show()
             offClick = backButton.onClick(onBackButtonClick)
         }
-    })
+    }, { immediate: true })
+    onUnmounted(() => offClick())
 
     async function onBackButtonClick(): Promise<void> {
-        await router.go(-1)
+        if (window.history.state?.back)
+            router.back()
+        else
+            await router.push('/')
     }
 }

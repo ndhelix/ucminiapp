@@ -1,21 +1,25 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 import { useBackButton } from '@/composables/useBackButton';
-import { getCrmClient } from '@/api/crmClient';
-import type { MiniAppMeResponse } from '@/api/crmTypes';
+import { workspace, loadWorkspace } from '@/api/workspace';
+import type { Permissions } from '@/api/workspace';
+import '@/assets/workspace.css';
 
 useBackButton();
 
 const loading = ref( true );
-const me = ref<MiniAppMeResponse | null>( null );
+const me = computed(() => workspace.me);
+const route = useRoute();
+const allowed = computed(() => {
+  const permission = route.meta.permission as keyof Permissions | undefined;
+  return !permission || !!me.value?.Permissions[permission];
+});
 const loadErr = ref<string | null>( null );
 
 onMounted( async () => {
   try {
-    const { data } = await getCrmClient().post<MiniAppMeResponse>( '/MiniApp/Me', {} );
-    me.value = data;
-    if ( !data.Success )
-      loadErr.value = data.ErrMsg || 'Доступ запрещён';
+    await loadWorkspace();
   }
   catch ( e ) {
     loadErr.value = e instanceof Error ? e.message : String( e );
@@ -38,31 +42,33 @@ onMounted( async () => {
         {{ loadErr }}
       </div>
     </template>
-    <template v-else-if="!me?.Success">
+    <template v-else-if="!me">
       <div class="app-state app-state--error">
-        {{ me?.ErrMsg || 'Нет доступа к мини-приложению.' }}
+        Нет доступа к мини-приложению.
       </div>
     </template>
     <template v-else>
       <header class="app-header">
-        <div class="app-header__title">
+        <RouterLink to="/" class="app-header__title" aria-label="CRM — главная">
           CRM
-        </div>
+        </RouterLink>
         <div class="app-header__sub">
           {{ me?.Name }} · компания {{ me?.CompanyId }}
-          <span v-if="me?.MiniappUserLevel === 2" class="badge">админ</span>
+          <span v-if="me?.Permissions.IsAdmin" class="badge">админ</span>
         </div>
       </header>
       <main class="app-main">
-        <RouterView />
+        <RouterView v-if="allowed" :key="route.path" />
+        <p v-else role="alert">Этот раздел недоступен по вашей должности.</p>
       </main>
       <nav class="app-nav">
-        <RouterLink class="app-nav__link" active-class="app-nav__link--active" to="/">
-          Календарь
+        <RouterLink class="app-nav__link" exact-active-class="app-nav__link--active" to="/">
+          Главная
         </RouterLink>
-        <RouterLink class="app-nav__link" active-class="app-nav__link--active" to="/reports">
-          Отчёты
-        </RouterLink>
+        <RouterLink v-if="me?.Permissions.Clients" class="app-nav__link" :class="{ 'app-nav__link--active': route.path.startsWith('/clients') }" to="/clients">Клиенты</RouterLink>
+        <RouterLink v-if="me?.Permissions.Events" class="app-nav__link" :class="{ 'app-nav__link--active': route.path.startsWith('/events') }" to="/events">События</RouterLink>
+        <RouterLink v-if="me?.Permissions.Missions" class="app-nav__link" :class="{ 'app-nav__link--active': route.path.startsWith('/missions') }" to="/missions">Задачи</RouterLink>
+        <RouterLink class="app-nav__link" :class="{ 'app-nav__link--active': ['/more', '/reports', '/analytics', '/notifications', '/payments', '/catalog', '/bulk', '/exams', '/audit', '/bot-stream'].some(path => route.path === path || route.path.startsWith(path + '/')) }" to="/more">Ещё</RouterLink>
       </nav>
     </template>
   </div>
@@ -93,6 +99,8 @@ onMounted( async () => {
 }
 
 .app-header__title {
+  color: inherit;
+  text-decoration: none;
   font-size: 1.25rem;
   font-weight: 700;
 }
@@ -136,7 +144,8 @@ onMounted( async () => {
 .app-nav__link {
   flex: 1;
   text-align: center;
-  padding: 14px 8px;
+  padding: 14px 4px;
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--tg-theme-link-color, #2481cc);
   text-decoration: none;
