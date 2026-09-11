@@ -1,0 +1,1 @@
+function o(r,t){var n;return t==null||t===""?"—":r.Type==="bool"?t?"Да":"Нет":r.Options?((n=r.Options.find(e=>e.Id===Number(t)))==null?void 0:n.Name)||String(t):r.Type==="datetime-local"||r.Type==="date"?new Date(String(t)).toLocaleString("ru-RU",r.Type==="date"?{dateStyle:"short"}:{dateStyle:"short",timeStyle:"short"}):String(t)}export{o as c};
