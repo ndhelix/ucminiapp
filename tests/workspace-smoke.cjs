@@ -12,7 +12,7 @@ async function main() {
   try {
     await new Promise((resolve, reject) => { server.stdout.on('data', d => { if (String(d).includes('4179')) resolve(); }); server.on('error', reject); server.on('exit', code => reject(Error(`Preview exited: ${code}`))); setTimeout(() => reject(Error('Preview timeout')), 10000).unref(); });
     browser = await chromium.launch({ headless: true, channel: process.platform === 'win32' ? 'msedge' : undefined });
-    const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
     await context.addInitScript(() => { window.TelegramWebviewProxy = { postEvent(name) {
       if (name === 'web_app_request_viewport') setTimeout(() => window.dispatchEvent(new MessageEvent('message', { data: JSON.stringify({ eventType: 'viewport_changed', eventData: { height: 844, is_state_stable: true, is_expanded: true } }) })), 0);
     } }; });
@@ -21,6 +21,10 @@ async function main() {
     const event = { Id: 91, ClientId: 71, ManagerId: 12, CreatorId: 12, EventTypeId: 5, EventStatusId: 1, ServiceId: null, Planned: '2026-09-11T11:00:00', ExpiryDate: null, Comments: 'Счёт', IncomeRub: 100, DurationMin: 30, Revision: 'event-v1' };
     const mission = { Id: 101, Name: 'Проверить оплату', Descr: 'Описание задачи', ManagerId: 12, CreatorId: 12, StatusId: 1, TypeId: 1, Priority: 1, Closed: false, Planned: '2026-10-01T00:00:00', Created: '2026-09-11T12:00:00', Revision: 'mission-v1' };
     const comments = [], dialog = [{ Key: 'in:1', Created: '2026-09-11T12:00:00', Text: 'Здравствуйте', Outgoing: false, Status: 'Получено' }];
+    let chartData = {
+      Labels: Array.from({ length: 14 }, (_, i) => String(i + 1).padStart(2, '0') + '.09.2026'),
+      Series: ['Highleveltrade', 'Venividivici', 'RocketToTheMoon', 'Crypto'].flatMap((Channel, c) => [false, true].map(Dashed => ({ Name: Channel + (Dashed ? ' — отписки' : ' — подписки'), Channel, Dashed, Values: Array.from({ length: 14 }, (_, i) => (Dashed ? 8 : 40) + c * 14 + (i * (c + 2) * 13 % 65)) })))
+    };
     let unread = 1;
     const saves = [], external = [], errors = [];
     await context.route('**/*', async route => {
@@ -53,7 +57,7 @@ async function main() {
         case 'Notifications': data = { Page: 1, Total: 1, Unread: unread, Through: '2026-09-11T12:00:00', Items: [{ Id: 1, ClientId: 71, ClientName: client.Name, ChatId: 123456, Message: 'Новое уведомление', Created: '2026-09-11T12:00:00', Unread: !!unread }] }; break;
         case 'ReadNotifications': saves.push({ action, body }); unread = 0; data = {}; break;
         case 'Payments': saves.push({ action, body }); data = { Page: 1, Total: 1, Totals: { Income: 2000, Refunds: 0 }, Items: [{ Id: 1, Kind: 'payment', ClientId: 71, ClientName: '', TelegramId: 123456, Created: '2026-09-11T12:00:00', Rub: 2000, Tokens: 2000, Status: 'succeeded', Description: 'Покупка токенов', ExternalId: 'test-payment', PaidAt: '2026-09-11T12:00:00' }] }; break;
-        case 'SubscriberDynamics': data = { Labels: ['01.09.2026', '02.09.2026'], Series: ['Highleveltrade', 'Venividivici', 'RocketToTheMoon', 'Crypto'].flatMap(Channel => [false, true].map(Dashed => ({ Name: Channel + (Dashed ? ' — отписки' : ' — подписки'), Channel, Dashed, Values: [2, 5] }))) }; break;
+        case 'SubscriberDynamics': data = chartData; break;
         case 'SubscribersTransferReport': data = { Items: [{ Channel: 'Moon', Link: '[PUBLIC]', LinkName: 'Публичная', SubscriberCount: 10, ClientCount: 2, TransferPercent: 20, LeftCount: 1, IncomeRub: 100 }] }; break;
         case 'AdsourceStats': data = { Items: [{ Name: 'Реклама', Count: 12 }] }; break;
         case 'BotStats': data = { BotStarts: 100, BuyersCount: 10, IncomeSumRub: 2000 }; break;
@@ -132,7 +136,56 @@ async function main() {
     await page.getByRole('link', { name: 'Ещё', exact: true }).click();
     await page.getByRole('link', { name: 'Подписчики и аналитика', exact: true }).click();
     await page.locator('svg polyline').first().waitFor(); assert.equal(await page.locator('svg polyline').count(), 8); assert.equal(await page.locator('svg polyline[stroke-dasharray]').count(), 4);
-    await page.getByRole('button', { name: 'Crypto — отписки', exact: true }).click(); assert.equal(await page.locator('svg polyline').count(), 7);
+    const plot = page.locator('.chart-plot'), tooltip = page.getByRole('tooltip');
+    await plot.hover({ position: { x: 54, y: 100 } });
+    await tooltip.getByText('01.09.2026', { exact: true }).waitFor();
+    assert.equal(await tooltip.locator('.chart-tooltip__row').count(), 8);
+    for (const series of chartData.Series) {
+      const row = tooltip.locator('.chart-tooltip__row').filter({ hasText: series.Name });
+      assert.equal(await row.locator('b').innerText(), String(series.Values[0]));
+    }
+    await page.getByRole('button', { name: 'Crypto — отписки', exact: true }).click();
+    assert.equal(await page.locator('svg polyline').count(), 7);
+    assert.equal(await tooltip.locator('.chart-tooltip__row').count(), 7);
+    assert.equal(await page.getByRole('button', { name: 'Crypto — отписки', exact: true }).getAttribute('aria-pressed'), 'false');
+    await page.getByRole('button', { name: 'Скрыть все', exact: true }).click();
+    assert.equal(await page.locator('svg polyline').count(), 0);
+    await page.getByText(/Все линии скрыты/).waitFor();
+    assert.equal(await tooltip.count(), 0);
+    await page.getByRole('button', { name: 'Показать все', exact: true }).click();
+    assert.equal(await page.locator('svg polyline').count(), 8);
+    await plot.focus(); await plot.press('End');
+    await tooltip.getByText('14.09.2026', { exact: true }).waitFor();
+    assert.equal(await tooltip.locator('.chart-tooltip__row').first().locator('b').innerText(), String(chartData.Series[0].Values[13]));
+    await plot.press('Escape'); assert.equal(await tooltip.count(), 0);
+    await plot.scrollIntoViewIfNeeded();
+    let chartBox = await plot.boundingBox();
+    await page.touchscreen.tap(chartBox.x + 54, chartBox.y + 100);
+    await tooltip.getByText('01.09.2026', { exact: true }).waitFor();
+    assert.equal(await page.locator('.chart-tooltip--floating').count(), 0);
+    await page.setViewportSize({ width: 390, height: 1400 });
+    await page.locator('.subscriber-chart').screenshot({ path: 'tests/chart-mobile.png' });
+    await page.setViewportSize({ width: 320, height: 844 });
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, 'Chart width 320');
+    await page.setViewportSize({ width: 1200, height: 1000 });
+    await plot.hover({ position: { x: 200, y: 120 } });
+    await page.locator('.chart-tooltip--floating').waitFor();
+    chartBox = await page.locator('.chart-frame').boundingBox();
+    const tipBox = await tooltip.boundingBox();
+    assert.ok(tipBox.x >= chartBox.x && tipBox.x + tipBox.width <= chartBox.x + chartBox.width, 'Tooltip stays inside chart');
+    await page.locator('.subscriber-chart').screenshot({ path: 'tests/chart-desktop.png' });
+    await page.mouse.move(0, 0); await tooltip.waitFor({ state: 'hidden' });
+    await page.setViewportSize({ width: 390, height: 844 });
+    chartData = { Labels: ['01.09.2026'], Series: chartData.Series.map(s => ({ ...s, Values: [0] })) };
+    await page.getByRole('button', { name: 'Показать', exact: true }).click();
+    await plot.waitFor(); await plot.focus(); await plot.press('Home');
+    await tooltip.getByText('01.09.2026', { exact: true }).waitFor();
+    assert.equal(await tooltip.locator('.chart-tooltip__row').first().locator('b').innerText(), '0');
+    assert.equal(await page.locator('svg polyline').count(), 8);
+    chartData = { Labels: [], Series: [] };
+    await page.getByRole('button', { name: 'Показать', exact: true }).click();
+    await page.getByText('Нет данных за выбранный период.', { exact: true }).waitFor();
+
     await page.getByLabel('Отчёт').selectOption('transfers'); await page.getByRole('button', { name: 'Показать', exact: true }).click(); await page.getByText('Клиентов: 2 · Переход: 20%').waitFor();
     await page.getByLabel('Отчёт').selectOption('adsources'); await page.getByRole('button', { name: 'Показать', exact: true }).click(); await page.getByText('Новых клиентов: 12').waitFor();
     await page.getByLabel('Отчёт').selectOption('bot'); await page.getByRole('button', { name: 'Показать', exact: true }).click(); await page.getByText('Покупателей: 10').waitFor();
